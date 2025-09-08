@@ -1,13 +1,10 @@
-# Example: Registering model after training
 import mlflow
+import os
 
-run_id = "5a2a565e3f8e49e5bce59e503886a708"
-result = mlflow.register_model(f"runs:/{run_id}/model", "CustomerChurnModel")
+# You might want to get the latest run_id;
+#  here we show hardcoded for simplicity
+run_id = os.environ.get("MLFLOW_RUN_ID", "last_run_id_here")
+model_name = os.environ.get("MLFLOW_MODEL_NAME", "CustomerChurnModel")
+
+result = mlflow.register_model(f"runs:/{run_id}/model", model_name)
 print("Model registered with name:", result.name)
-
-client = mlflow.tracking.MlflowClient()
-client.transition_model_version_stage(
-    name="CustomerChurnModel",
-    version=1,  # Replace with your actual version number
-    stage="Production",
-)
