@@ -78,7 +78,6 @@ jobs:
           RUN_ID=$(cat run_id.txt)
           export RUN_ID
           python src/model_register.py
-          mlflow models serve -m "runs:/$RUN_ID/model" --no-conda -p 5000 --env-manager local &
       - name: Upload mlruns artifact (post-registration)
         uses: actions/upload-artifact@v4
         with:
