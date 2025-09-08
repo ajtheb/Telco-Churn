@@ -9,5 +9,5 @@ client = mlflow.tracking.MlflowClient()
 client.transition_model_version_stage(
     name="CustomerChurnModel",
     version=1,  # Replace with your actual version number
-    stage="Production"
+    stage="Production",
 )

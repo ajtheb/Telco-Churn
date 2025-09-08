@@ -15,12 +15,12 @@ os.makedirs("./data/processed", exist_ok=True)
 
 
 def train_model(
-    data_path='./data/processed/featured_telco.csv',
-    model_out_path='./models/churn_rf.pkl',
-    mlflow_experiment='telco-churn',
+    data_path="./data/processed/featured_telco.csv",
+    model_out_path="./models/churn_rf.pkl",
+    mlflow_experiment="telco-churn",
     n_estimators=200,
     test_size=0.2,
-    random_state=42
+    random_state=42,
 ):
     # Debug: Print working directory and URIs
     print("Current working directory:", os.getcwd())
@@ -28,8 +28,8 @@ def train_model(
 
     # 1. Load Data
     df = pd.read_csv(data_path)
-    x = df.drop(['Churn'], axis=1)
-    y = df['Churn']
+    x = df.drop(["Churn"], axis=1)
+    y = df["Churn"]
 
     # 2. Split Data
     x_train, x_test, y_train, y_test = train_test_split(
@@ -37,10 +37,7 @@ def train_model(
     )
 
     # 3. Define Model
-    clf = RandomForestClassifier(
-        n_estimators=n_estimators,
-        random_state=random_state
-    )
+    clf = RandomForestClassifier(n_estimators=n_estimators, random_state=random_state)
 
     # 4. Train Model with MLflow Tracking
     mlflow.set_experiment(mlflow_experiment)
@@ -52,17 +49,16 @@ def train_model(
         signature = infer_signature(x_train, clf.predict(x_train))
         input_example = x_train.iloc[:1]
         mlflow.sklearn.log_model(
-            clf,
-            "model",
-            signature=signature,
-            input_example=input_example
+            clf, "model", signature=signature, input_example=input_example
         )
-        mlflow.log_params({
-            "n_estimators": n_estimators,
-            "model_type": "RandomForest",
-            "smote": True,
-            "test_size": test_size
-        })
+        mlflow.log_params(
+            {
+                "n_estimators": n_estimators,
+                "model_type": "RandomForest",
+                "smote": True,
+                "test_size": test_size,
+            }
+        )
 
         # 6. Evaluate
         y_pred = clf.predict(x_test)
@@ -70,15 +66,15 @@ def train_model(
         metrics = {
             "accuracy": accuracy_score(y_test, y_pred),
             "f1_score": f1_score(y_test, y_pred),
-            "roc_auc": roc_auc_score(y_test, y_proba)
+            "roc_auc": roc_auc_score(y_test, y_proba),
         }
         for k, v in metrics.items():
             mlflow.log_metric(k, v)
         print("Metrics:", metrics)
 
         # 7. Save test set for evaluation
-        x_test.to_csv('./data/processed/X_test.csv', index=False)
-        y_test.to_csv('./data/processed/y_test.csv', index=False)
+        x_test.to_csv("./data/processed/X_test.csv", index=False)
+        y_test.to_csv("./data/processed/y_test.csv", index=False)
 
     return clf
 
