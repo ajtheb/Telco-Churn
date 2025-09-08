@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 sys.path.append("./src")
-from model_training import train_model
+from model_training import train_model  # noqa: E402
 
 
 def test_training_pipeline():
