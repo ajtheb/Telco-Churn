@@ -81,8 +81,8 @@ jobs:
       - name: Upload mlruns artifact (post-registration)
         uses: actions/upload-artifact@v4
         with:
-          name: mlruns
-          path: mlruns/
+          name: mlruns_registered
+          path: mlruns_registered/
 
   deploy:
     runs-on: ubuntu-latest
@@ -97,8 +97,8 @@ jobs:
       - name: Download mlruns artifact
         uses: actions/download-artifact@v4
         with:
-          name: mlruns
-          path: .
+          name: mlruns_registered
+          path: mlruns_registered/
       - name: Download run_id artifact
         uses: actions/download-artifact@v4
         with:
