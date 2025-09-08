@@ -44,7 +44,7 @@ def train_model(
 
     # 4. Train Model with MLflow Tracking
     mlflow.set_experiment(mlflow_experiment)
-    with mlflow.start_run():
+    with mlflow.start_run() as run:
         clf.fit(x_train, y_train)
         joblib.dump(clf, model_out_path)
 
@@ -79,6 +79,8 @@ def train_model(
         x_test.to_csv("./data/processed/X_test.csv", index=False)
         y_test.to_csv("./data/processed/y_test.csv", index=False)
 
+        with open("run_id.txt", "w") as f:
+            f.write(run.info.run_id)
     return clf
 
 
