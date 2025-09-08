@@ -1,4 +1,12 @@
-jobs:
+name: MLOps Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jjobs:
   build-test-train:
     runs-on: ubuntu-latest
     env:
