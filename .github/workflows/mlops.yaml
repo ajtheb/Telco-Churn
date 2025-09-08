@@ -71,7 +71,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: mlruns
-          path: mlruns/
+          path: .
       - run: pip install -r requirements.txt
       - name: Register Model in MLflow
         run: |
@@ -82,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mlruns_registered
-          path: mlruns_registered/
+          path: mlruns/
 
   deploy:
     runs-on: ubuntu-latest
@@ -98,14 +98,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: mlruns_registered
-          path: mlruns_registered/
+          path: .           # <-- Download to project root, not into mlruns_registered/
       - name: Download run_id artifact
         uses: actions/download-artifact@v4
         with:
           name: run-id
           path: .
       - run: pip install mlflow[extras]
-      - name: Serve model using MLflow runs URI
+      - name: Debug listing
+        run: find mlruns
+      - name: Serve model using MLflow models URI
         run: |
-          RUN_ID=$(cat run_id.txt)
           mlflow models serve -m "models:/CustomerChurnModel/1" --no-conda -p 5000 --env-manager local &
