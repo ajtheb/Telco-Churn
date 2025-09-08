@@ -93,10 +93,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: mlruns
-          path: mlruns/
+          path: .
+      - name: Download run_id artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: run-id
+          path: .
       - run: pip install mlflow[extras]
-      # Serve the last model (for real production, push image or upload to model serving infra)
-      - run: |
+      - name: Serve model using MLflow runs URI
+        run: |
+          RUN_ID=$(cat run_id.txt)
           mlflow models serve \
-          -m "mlruns/0/$(ls -td mlruns/0/*/ | head -n1 | xargs -n1 basename)/artifacts/model"\
+            -m "runs:/$RUN_ID/model" \
             --no-conda -p 5000 --env-manager local &
