@@ -52,7 +52,7 @@ jobs:
       - name: Evaluate model
         run: python src/model_evaluation.py
 
-  model-register:
+  model-register-deploy:
     runs-on: ubuntu-latest
     needs: build-test-train
     env:
@@ -82,31 +82,32 @@ jobs:
       - name: Upload mlruns artifact (post-registration)
         uses: actions/upload-artifact@v4
         with:
-          name: mlruns_registered
+          name: mlruns
           path: mlruns/
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: model-register
-  #   env:
-  #     MLFLOW_TRACKING_URI: file:./mlruns
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-python@v4
-  #       with:
-  #         python-version: '3.8'
-  #     - name: Download mlruns artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: mlruns
-  #         path: .
-  #     - name: Download run_id artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: run-id
-  #         path: .
-  #     - run: pip install mlflow[extras]
-  #     - name: Serve model using MLflow runs URI
-  #       run: |
-  #         RUN_ID=$(cat run_id.txt)
+  deploy:
+    runs-on: ubuntu-latest
+    needs: model-register
+    env:
+      MLFLOW_TRACKING_URI: file:./mlruns
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+      - name: Download mlruns artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: mlruns
+          path: mlruns/
+      - name: Download run_id artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: run-id
+          path: .
+      - run: pip install mlflow[extras]
+      - name: Serve model using MLflow runs URI
+        run: |
+          RUN_ID=$(cat run_id.txt)
+          mlflow models serve -m "runs:/$RUN_ID/model" --no-conda -p 5000 --env-manager local &
           
