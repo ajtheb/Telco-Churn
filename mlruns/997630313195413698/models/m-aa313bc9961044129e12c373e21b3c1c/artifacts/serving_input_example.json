@@ -1,0 +1,52 @@
+{
+  "dataframe_split": {
+    "columns": [
+      "gender",
+      "SeniorCitizen",
+      "Partner",
+      "Dependents",
+      "tenure",
+      "PhoneService",
+      "MultipleLines",
+      "InternetService",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "Contract",
+      "PaperlessBilling",
+      "PaymentMethod",
+      "MonthlyCharges",
+      "TotalCharges",
+      "tenure_group",
+      "monthly_total_ratio"
+    ],
+    "data": [
+      [
+        1,
+        0,
+        1,
+        1,
+        1.3273654847539706,
+        1,
+        2,
+        1,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0,
+        2,
+        0,
+        1,
+        0.9889627507661828,
+        1.674504769921064,
+        5,
+        -0.5079091016987529
+      ]
+    ]
+  }
+}

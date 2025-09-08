@@ -1,0 +1,48 @@
+artifact_path: file:///Users/apoorvjain/Projects/Churn%20Prediction/mlruns/997630313195413698/models/m-aa313bc9961044129e12c373e21b3c1c/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.1
+is_signature_from_type_hint: false
+mlflow_version: 3.3.2
+model_id: m-aa313bc9961044129e12c373e21b3c1c
+model_size_bytes: 33351576
+model_uuid: m-aa313bc9961044129e12c373e21b3c1c
+prompts: null
+run_id: 96aea7955973426ca0bacb3099811a8a
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "long", "name": "gender", "required": true}, {"type": "long",
+    "name": "SeniorCitizen", "required": true}, {"type": "long", "name": "Partner",
+    "required": true}, {"type": "long", "name": "Dependents", "required": true}, {"type":
+    "double", "name": "tenure", "required": true}, {"type": "long", "name": "PhoneService",
+    "required": true}, {"type": "long", "name": "MultipleLines", "required": true},
+    {"type": "long", "name": "InternetService", "required": true}, {"type": "long",
+    "name": "OnlineSecurity", "required": true}, {"type": "long", "name": "OnlineBackup",
+    "required": true}, {"type": "long", "name": "DeviceProtection", "required": true},
+    {"type": "long", "name": "TechSupport", "required": true}, {"type": "long", "name":
+    "StreamingTV", "required": true}, {"type": "long", "name": "StreamingMovies",
+    "required": true}, {"type": "long", "name": "Contract", "required": true}, {"type":
+    "long", "name": "PaperlessBilling", "required": true}, {"type": "long", "name":
+    "PaymentMethod", "required": true}, {"type": "double", "name": "MonthlyCharges",
+    "required": true}, {"type": "double", "name": "TotalCharges", "required": true},
+    {"type": "long", "name": "tenure_group", "required": true}, {"type": "double",
+    "name": "monthly_total_ratio", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-09-08 06:32:19.877783'
