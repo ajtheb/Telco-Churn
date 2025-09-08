@@ -1,0 +1,10 @@
+artifact_location: file:///Users/apoorvjain/Projects/Churn%20Prediction/mlruns/454427412133207756/models/m-9b8e52e614f548e7b68b0f5843097642/artifacts
+creation_timestamp: 1757309766265
+experiment_id: '454427412133207756'
+last_updated_timestamp: 1757309767602
+model_id: m-9b8e52e614f548e7b68b0f5843097642
+model_type: null
+name: model
+source_run_id: 1db92a9754ae4f28892c06feb4bd9273
+status: 2
+status_message: null

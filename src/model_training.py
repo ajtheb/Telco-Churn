@@ -8,8 +8,8 @@ import mlflow.sklearn
 import joblib
 
 def train_model(
-    data_path='data/processed/featured_telco.csv',
-    model_out_path='models/churn_rf.pkl',
+    data_path='./data/processed/featured_telco.csv',
+    model_out_path='./models/churn_rf.pkl',
     mlflow_experiment='telco-churn',
     n_estimators=200,
     test_size=0.2,
@@ -55,8 +55,8 @@ def train_model(
         print("Metrics:", metrics)
 
         # 7. Save test set for evaluation
-        X_test.to_csv('data/processed/X_test.csv', index=False)
-        y_test.to_csv('data/processed/y_test.csv', index=False)
+        X_test.to_csv('./data/processed/X_test.csv', index=False)
+        y_test.to_csv('./data/processed/y_test.csv', index=False)
 
     return clf
 
