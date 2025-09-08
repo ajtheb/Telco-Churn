@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/apoorvjain/Projects/Churn Prediction/mlruns1/233375712001660303/faba73aa684f4744876df3534acee90d/artifacts
+end_time: 1757310494164
+entry_point_name: ''
+experiment_id: '233375712001660303'
+lifecycle_stage: active
+run_id: faba73aa684f4744876df3534acee90d
+run_name: clean-calf-770
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1757310492147
+status: 3
+tags: []
+user_id: apoorvjain

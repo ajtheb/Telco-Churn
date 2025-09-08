@@ -6,7 +6,7 @@ from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
 import mlflow
 import mlflow.sklearn
 import joblib
-
+mlflow.set_tracking_uri("file:./mlruns1")
 def train_model(
     data_path='./data/processed/featured_telco.csv',
     model_out_path='./models/churn_rf.pkl',
@@ -29,7 +29,6 @@ def train_model(
     clf = RandomForestClassifier(n_estimators=n_estimators, random_state=random_state)
 
     # 5. Train Model with MLflow Tracking
-    mlflow.set_tracking_uri("file:./mlruns")
     mlflow.set_experiment(mlflow_experiment)
     with mlflow.start_run():
         clf.fit(X_train, y_train)
