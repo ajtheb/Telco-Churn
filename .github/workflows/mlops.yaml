@@ -98,5 +98,5 @@ jobs:
       # Serve the last model (for real production, push image or upload to model serving infra)
       - run: |
           mlflow models serve \
-            -m "mlruns/0/$(ls mlruns/0 | sort | tail -n 1)/artifacts/model" \
+          -m "mlruns/0/$(ls -td mlruns/0/*/ | head -n1 | xargs -n1 basename)/artifacts/model"\
             --no-conda -p 5000 --env-manager local &
