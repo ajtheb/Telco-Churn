@@ -52,7 +52,7 @@ jobs:
       - name: Evaluate model
         run: python src/model_evaluation.py
 
-  model-register-deploy:
+  model-register:
     runs-on: ubuntu-latest
     needs: build-test-train
     env:
