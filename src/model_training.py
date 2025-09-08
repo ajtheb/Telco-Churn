@@ -10,12 +10,11 @@ import joblib
 import os
 
 # Ensure directories exist
-os.makedirs("./mlruns1", exist_ok=True)
 os.makedirs("./models", exist_ok=True)
 os.makedirs("./data/processed", exist_ok=True)
 
 # Set tracking URI to absolute path
-mlflow.set_tracking_uri(f"file://{os.path.abspath('./mlruns1')}")
+# mlflow.set_tracking_uri(f"file://{os.path.abspath('./mlruns1')}")
 
 def train_model(
     data_path='./data/processed/featured_telco.csv',
