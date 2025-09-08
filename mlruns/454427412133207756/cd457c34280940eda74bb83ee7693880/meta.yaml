@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/apoorvjain/Projects/Churn%20Prediction/mlruns/454427412133207756/cd457c34280940eda74bb83ee7693880/artifacts
+end_time: 1757309474521
+entry_point_name: ''
+experiment_id: '454427412133207756'
+lifecycle_stage: active
+run_id: cd457c34280940eda74bb83ee7693880
+run_name: whimsical-duck-95
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1757309472530
+status: 3
+tags: []
+user_id: apoorvjain
