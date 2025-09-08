@@ -2,7 +2,9 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 
-def load_and_clean_data(input_path="data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv"):
+def load_and_clean_data(
+        input_path="data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv"
+        ):
     df1 = pd.read_csv(input_path)
     df1 = df1.dropna(how="all")
     df1 = df1[~df1.duplicated()]

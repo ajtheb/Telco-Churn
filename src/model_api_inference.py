@@ -34,7 +34,9 @@ input_df = pd.read_csv(test_path)
 input_df = input_df.drop(columns=["Churn"])
 print(input_df.columns)
 # Load the model from MLflow registry (replace <model_id> as needed)
-model = mlflow.pyfunc.load_model("runs:/5a2a565e3f8e49e5bce59e503886a708/model")
+model = mlflow.pyfunc.load_model(
+    "runs:/5a2a565e3f8e49e5bce59e503886a708/model"
+    )
 
 # Predict for the single input
 prediction = model.predict(input_df)

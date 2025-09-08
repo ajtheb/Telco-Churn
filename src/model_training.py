@@ -37,7 +37,10 @@ def train_model(
     )
 
     # 3. Define Model
-    clf = RandomForestClassifier(n_estimators=n_estimators, random_state=random_state)
+    clf = RandomForestClassifier(
+        n_estimators=n_estimators,
+        random_state=random_state
+        )
 
     # 4. Train Model with MLflow Tracking
     mlflow.set_experiment(mlflow_experiment)

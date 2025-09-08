@@ -1,6 +1,10 @@
 import pandas as pd
 import joblib
-from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
+from sklearn.metrics import (
+    classification_report,
+    confusion_matrix,
+    roc_auc_score,
+)
 
 
 def evaluate_model():
