@@ -7,7 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -72,7 +71,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: mlruns
-          path: .
+          path: mlruns/
       - run: pip install -r requirements.txt
       - name: Register Model in MLflow
         run: |
@@ -106,10 +105,7 @@ jobs:
           name: run-id
           path: .
       - run: pip install mlflow[extras]
-      - name: List mlruns structure
-        run: find mlruns
-      - name: Serve model from registry
+      - name: Serve model using MLflow runs URI
         run: |
-          mlflow models serve \
-            -m "models:/CustomerChurnModel/1" \
-            --no-conda -p 5000 --env-manager local &
+          RUN_ID=$(cat run_id.txt)
+          mlflow models serve -m "models:/CustomerChurnModel/1" --no-conda -p 5000 --env-manager local &
