@@ -5,8 +5,18 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score, accuracy_score, roc_auc_score
 import mlflow
 import mlflow.sklearn
+from mlflow.models.signature import infer_signature
 import joblib
-mlflow.set_tracking_uri("file:./mlruns1")
+import os
+
+# Ensure directories exist
+os.makedirs("./mlruns1", exist_ok=True)
+os.makedirs("./models", exist_ok=True)
+os.makedirs("./data/processed", exist_ok=True)
+
+# Set tracking URI to absolute path
+mlflow.set_tracking_uri(f"file://{os.path.abspath('./mlruns1')}")
+
 def train_model(
     data_path='./data/processed/featured_telco.csv',
     model_out_path='./models/churn_rf.pkl',
@@ -15,6 +25,10 @@ def train_model(
     test_size=0.2,
     random_state=42
 ):
+    # Debug: Print working directory and URIs
+    print("Current working directory:", os.getcwd())
+    print("Tracking URI:", mlflow.get_tracking_uri())
+    
     # 1. Load Data
     df = pd.read_csv(data_path)
     X = df.drop(['Churn'], axis=1)
@@ -25,15 +39,24 @@ def train_model(
         X, y, stratify=y, test_size=test_size, random_state=random_state
     )
 
-    # 4. Define Model
+    # 3. Define Model
     clf = RandomForestClassifier(n_estimators=n_estimators, random_state=random_state)
 
-    # 5. Train Model with MLflow Tracking
+    # 4. Train Model with MLflow Tracking
     mlflow.set_experiment(mlflow_experiment)
     with mlflow.start_run():
         clf.fit(X_train, y_train)
         joblib.dump(clf, model_out_path)
-        mlflow.sklearn.log_model(clf, "model")
+
+        # 5. Log Model with Signature and Input Example
+        signature = infer_signature(X_train, clf.predict(X_train))
+        input_example = X_train.iloc[:1]
+        mlflow.sklearn.log_model(
+            clf, 
+            "model", 
+            signature=signature, 
+            input_example=input_example
+        )
         mlflow.log_params({
             "n_estimators": n_estimators,
             "model_type": "RandomForest",
