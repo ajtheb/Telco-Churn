@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
 
-jjobs:
+jobs:
   build-test-train:
     runs-on: ubuntu-latest
     env:
