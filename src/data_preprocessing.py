@@ -51,6 +51,7 @@ if __name__ == "__main__":
     df = load_and_clean_data()
     df, fitted_encoders = encode_categorical(df)
     os.makedirs(config.MODEL_DIR, exist_ok=True)
+    os.makedirs(os.path.dirname(config.CLEANED_DATA_PATH), exist_ok=True)
     joblib.dump(fitted_encoders, config.ENCODERS_PATH)
     logger.info("Saved label encoders to %s", config.ENCODERS_PATH)
     df.to_csv(config.CLEANED_DATA_PATH, index=False)

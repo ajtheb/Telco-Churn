@@ -52,6 +52,7 @@ if __name__ == "__main__":
     df = add_features(df)
     df, fitted_scaler = scale_numerical(df)
     os.makedirs(config.MODEL_DIR, exist_ok=True)
+    os.makedirs(os.path.dirname(config.FEATURED_DATA_PATH), exist_ok=True)
     joblib.dump(fitted_scaler, config.SCALER_PATH)
     logger.info("Saved scaler to %s", config.SCALER_PATH)
     df.to_csv(config.FEATURED_DATA_PATH, index=False)
