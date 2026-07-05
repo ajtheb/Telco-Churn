@@ -2,8 +2,6 @@ churn_env/
 
 # generated data/model artifacts
 data/processed/
-models/*.pkl
-models/*.json
 mlruns/
 run_id.txt
 .metrics/
