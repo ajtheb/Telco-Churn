@@ -93,6 +93,10 @@ jobs:
     needs: model-register
     env:
       MLFLOW_TRACKING_URI: file:./mlruns
+      # `mlflow models serve` refuses the file-store backend by default as of
+      # MLflow 3.x; we're intentionally keeping the file store (no new
+      # tracking infra), so opt back in.
+      MLFLOW_ALLOW_FILE_STORE: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
