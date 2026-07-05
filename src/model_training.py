@@ -1,4 +1,7 @@
+import json
+import logging
 import os
+
 import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -8,28 +11,38 @@ import mlflow
 import mlflow.sklearn
 from mlflow.models.signature import infer_signature
 
+import config
+
+logger = logging.getLogger(__name__)
 
 # Ensure directories exist
-os.makedirs("./models", exist_ok=True)
-os.makedirs("./data/processed", exist_ok=True)
+os.makedirs(config.MODEL_DIR, exist_ok=True)
+os.makedirs(os.path.dirname(config.FEATURED_DATA_PATH), exist_ok=True)
 
 
 def train_model(
-    data_path="./data/processed/featured_telco.csv",
-    model_out_path="./models/churn_rf.pkl",
-    mlflow_experiment="telco-churn",
+    data_path=None,
+    model_out_path=None,
+    mlflow_experiment=None,
     n_estimators=200,
     test_size=0.2,
     random_state=42,
 ):
-    # Debug: Print working directory and URIs
-    print("Current working directory:", os.getcwd())
-    print("Tracking URI:", mlflow.get_tracking_uri())
+    data_path = data_path or config.FEATURED_DATA_PATH
+    model_out_path = model_out_path or config.MODEL_PATH
+    mlflow_experiment = mlflow_experiment or config.MLFLOW_EXPERIMENT_NAME
+
+    logger.debug("Current working directory: %s", os.getcwd())
+    logger.debug("Tracking URI: %s", mlflow.get_tracking_uri())
 
     # 1. Load Data
     df = pd.read_csv(data_path)
     x = df.drop(["Churn"], axis=1)
     y = df["Churn"]
+
+    os.makedirs(config.MODEL_DIR, exist_ok=True)
+    with open(config.FEATURE_COLUMNS_PATH, "w") as f:
+        json.dump(list(x.columns), f)
 
     # 2. Split Data
     x_train, x_test, y_train, y_test = train_test_split(
@@ -54,6 +67,11 @@ def train_model(
         mlflow.sklearn.log_model(
             clf, "model", signature=signature, input_example=input_example
         )
+        mlflow.log_artifact(config.FEATURE_COLUMNS_PATH)
+        if os.path.exists(config.SCALER_PATH):
+            mlflow.log_artifact(config.SCALER_PATH)
+        if os.path.exists(config.ENCODERS_PATH):
+            mlflow.log_artifact(config.ENCODERS_PATH)
         mlflow.log_params(
             {
                 "n_estimators": n_estimators,
@@ -73,13 +91,13 @@ def train_model(
         }
         for k, v in metrics.items():
             mlflow.log_metric(k, v)
-        print("Metrics:", metrics)
+        logger.info("Metrics: %s", metrics)
 
         # 7. Save test set for evaluation
-        x_test.to_csv("./data/processed/X_test.csv", index=False)
-        y_test.to_csv("./data/processed/y_test.csv", index=False)
+        x_test.to_csv(config.X_TEST_PATH, index=False)
+        y_test.to_csv(config.Y_TEST_PATH, index=False)
 
-        with open("run_id.txt", "w") as f:
+        with open(config.RUN_ID_PATH, "w") as f:
             f.write(run.info.run_id)
     return clf
 

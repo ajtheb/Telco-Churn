@@ -1,0 +1,16 @@
+churn_env/
+
+# generated data/model artifacts
+data/processed/
+models/*.pkl
+models/*.json
+mlruns/
+run_id.txt
+.metrics/
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.coverage

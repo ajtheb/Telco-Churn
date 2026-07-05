@@ -1,0 +1,11 @@
+.git/
+churn_env/
+data/
+mlruns/
+notebooks/
+reports/
+tests/
+.metrics/
+.envs/
+**/__pycache__/
+*.pyc

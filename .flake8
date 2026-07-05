@@ -1,0 +1,3 @@
+[flake8]
+max-line-length = 99
+exclude = churn_env,mlruns,data,notebooks,.git,__pycache__
